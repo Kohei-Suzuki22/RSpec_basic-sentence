@@ -87,3 +87,16 @@ RSpec.describe "繊細なクラス" do
     
   end
 end
+
+
+# skipを使ったテストの中止。
+# skipから下のexampleは強制的に保留(pending)に入る。
+
+RSpec.describe "何らかの理由で実行したくないクラス" do 
+  it "実行したくないテスト" do 
+    expect(1+2).to eq 3
+    
+    skip "上までは実行するがこれから下は実行されない(pendingに入る。)"
+    expect(1+3).to eq 10
+  end
+end
