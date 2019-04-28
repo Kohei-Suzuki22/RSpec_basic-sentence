@@ -286,3 +286,23 @@ RSpec.describe User do
   end
   
 end
+
+
+#中身のないitを使う。(テストは後で書く。)
+# it "~" do .. end の 「do .. end」を省略すると、pending(保留)として扱われる。
+# メソッドの追加などの実装に移る前に、使うことで、使用を設計することが出来る。
+
+# 例 Userクラスのgood_byeメソッドを追加したい。
+
+RSpec.describe User do 
+  describe "#good_bye" do 
+    
+    context "12歳以下の場合" do 
+      it "ひらがなでさよならすること"
+    end
+    
+    context "13歳以上の場合" do 
+      it "漢字でさよならすること"
+    end
+  end
+end
