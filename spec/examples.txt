@@ -1,14 +1,14 @@
 example_id                   | status | run_time        |
 ---------------------------- | ------ | --------------- |
 ./spec/hello_spec.rb[1:1]    | passed | 0.00006 seconds |
-./spec/hello_spec.rb[2:1]    | passed | 0.00008 seconds |
-./spec/hello_spec.rb[2:2]    | passed | 0.00007 seconds |
-./spec/hello_spec.rb[2:3]    | passed | 0.00007 seconds |
-./spec/hello_spec.rb[3:1:1]  | passed | 0.00008 seconds |
+./spec/hello_spec.rb[2:1]    | passed | 0.00006 seconds |
+./spec/hello_spec.rb[2:2]    | passed | 0.00008 seconds |
+./spec/hello_spec.rb[2:3]    | passed | 0.0001 seconds  |
+./spec/hello_spec.rb[3:1:1]  | passed | 0.00006 seconds |
 ./spec/hello_spec.rb[3:2:1]  | passed | 0.00006 seconds |
-./spec/user_spec.rb[1:1:1:1] | passed | 0.00009 seconds |
-./spec/user_spec.rb[1:1:2:1] | passed | 0.00043 seconds |
+./spec/user_spec.rb[1:1:1:1] | passed | 0.00008 seconds |
+./spec/user_spec.rb[1:1:2:1] | passed | 0.00008 seconds |
 ./spec/user_spec.rb[2:1:1:1] | passed | 0.00009 seconds |
-./spec/user_spec.rb[2:1:2:1] | passed | 0.00008 seconds |
-./spec/user_spec.rb[3:1:1:1] | passed | 0.00009 seconds |
-./spec/user_spec.rb[3:1:2:1] | passed | 0.0001 seconds  |
+./spec/user_spec.rb[2:1:2:1] | passed | 0.00009 seconds |
+./spec/user_spec.rb[3:1:1:1] | passed | 0.00047 seconds |
+./spec/user_spec.rb[3:1:2:1] | passed | 0.00011 seconds |
