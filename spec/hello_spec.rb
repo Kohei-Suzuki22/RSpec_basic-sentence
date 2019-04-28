@@ -62,3 +62,28 @@ end
 
 
 
+# pendingを使ったテストの保留。
+
+# 本来、期待通り正しく動作するはずなのにどうしてもテストがpathしない場合に使う。
+# テストを実行してpendingを通り、それ以降でテストが失敗すれば、「pending(保留)」としてマークされる。
+# テストが最後までpathした場合は、「pendingする理由がありません」と、テスト失敗になってしまう。
+
+RSpec.describe "繊細なクラス" do 
+  it "繊細なテスト" do 
+    expect(1+2).to eq 3 
+  end
+  
+  context "Hello#message" do 
+    hello = Hello.new
+    it "繊細なテスト2"do 
+      # pending "この場合はテストがpathするのでテスト失敗となる。"
+      expect(hello.message).to eq "hello"
+    end
+    
+    it "繊細なテスト3" do 
+      pending "この先はなぜかテストが失敗するので後で直す。(pendingする)"
+      expect(hello.message).to eq "hi"
+    end
+    
+  end
+end
