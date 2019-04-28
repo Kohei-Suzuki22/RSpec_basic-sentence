@@ -13,6 +13,19 @@ RSpec.describe "四則演算" do
     expect(1+1).to eq 2
   end
   
+  #itのaliasメソッド(specify,example)
+  # specify(明記する。特定する。)
+  # example(実行例)
+  
+  specify "1+1は2になること" do 
+    expect(1+1).to eq 2
+  end
+  
+  example "1+1は2になること" do 
+    expect(1+1).to eq 2
+  end
+  
+  
   it "10-1は9になること" do 
     expect(10-1).to eq 9
   end
