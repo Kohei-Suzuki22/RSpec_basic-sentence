@@ -39,6 +39,7 @@ end
 
 
 #let を使った書き換え。
+
 #let は遅延評価。= 必要になる瞬間まで呼び出されない。
 #let はexampleがことなる場合は異なるオブジェクトを返す。
 
@@ -95,5 +96,36 @@ RSpec.describe User do
         expect(user.greet).to eq "僕はたろうです。"
       end
     end
+  end
+end
+
+
+# subjectを使った書き換え。
+
+# 1.subjectを使えば、テスト対象のオブジェクト、メソッドの実行結果[ここではuser.greet]
+#   が一つに決まっている場合にまとめることが出来る。
+# 2.expect(user.greet).to eq "~" →　is_expected_to eq "~"　にする。
+
+RSpec.describe User do 
+  describe "#greet" do 
+    
+    let(:params){{name:"たろう", age: age}}
+    let(:user){User.new(params)}
+    subject {user.greet}
+    
+    context "12歳以下の場合" do 
+      let(:age){12}
+      it "ひらがなで答えること" do 
+        is_expected.to eq "ぼくはたろうだよ。"
+      end
+    end
+    
+    context "13歳以上の場合" do 
+      let(:age){13}
+      it "漢字で答えること" do 
+        is_expected.to eq "僕はたろうです。"
+      end
+    end
+    
   end
 end
