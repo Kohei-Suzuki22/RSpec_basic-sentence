@@ -127,3 +127,33 @@ RSpec.describe User do
     
   end
 end
+
+
+#itやcontextに渡す文字列を英語で書く場合。
+
+#context に渡す英語の例
+# ・when~ (~であるとき)
+# ・with~ (~がある場合)
+# ・without~ (~がない場合)
+
+
+RSpec.describe User do 
+  describe "#greet" do 
+    let(:user){User.new(name:"たろう", age: age)}
+    subject {user.greet}
+    
+    context "when 12 years old or younger" do 
+      let(:age){12}
+      it "greets in hiragana" do 
+        is_expected.to eq "ぼくはたろうだよ。" 
+      end
+    end
+    
+    context "when 13 years old or older" do 
+      let(:age){13}
+      it "greets in kanji" do
+        is_expected.to eq "僕はたろうです。" 
+      end
+    end
+  end
+end
