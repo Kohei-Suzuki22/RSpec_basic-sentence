@@ -81,7 +81,7 @@ RSpec.describe "繊細なクラス" do
     end
     
     it "繊細なテスト3" do 
-      pending "この先はなぜかテストが失敗するので後で直す。(pendingする)"
+      pending "なぜかテストが失敗するのような場合に使う。後で直す。(pendingする)"
       expect(hello.message).to eq "hi"
     end
     
@@ -90,7 +90,9 @@ end
 
 
 # skipを使ったテストの中止。
-# skipから下のexampleは強制的に保留(pending)に入る。
+# skipから下のテストは強制的に保留(pending)に入る。
+
+# xitを使ったexaample全体のskip
 
 RSpec.describe "何らかの理由で実行したくないクラス" do 
   it "実行したくないテスト" do 
@@ -99,4 +101,12 @@ RSpec.describe "何らかの理由で実行したくないクラス" do
     skip "上までは実行するがこれから下は実行されない(pendingに入る。)"
     expect(1+3).to eq 10
   end
+  
+  #it(example)全体をskipさせたい場合はitの代わりにxitを使う。
+  
+  xit "実行したくないテスト2" do 
+    expect(1+5).to eq 6 
+    expect(2+9).to eq 11
+  end
+
 end
