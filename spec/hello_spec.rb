@@ -110,3 +110,28 @@ RSpec.describe "何らかの理由で実行したくないクラス" do
   end
 
 end
+
+
+# xdescribe, xcontextを使ったグループ全体をまとめてskip
+
+RSpec.xdescribe "四則演算" do 
+  it "1+1は2になること" do 
+    expect(1+1).to eq 2
+  end
+  
+  it "10-1は9になること" do 
+    expect(10-1).to eq 9
+  end
+end
+
+RSpec.describe "contextのskip" do 
+  context "四則演算" do 
+    it {expect(1+1).to eq 2}
+  end
+  
+  xcontext "管理者の場合" do 
+    it "社員情報を編集できる" do 
+      expect(true).to eq true
+    end
+  end
+end
