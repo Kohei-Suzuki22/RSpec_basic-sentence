@@ -201,3 +201,88 @@ RSpec.describe User do
     end
   end
 end
+
+
+# child?メソッドのテストも追加
+RSpec.describe User do 
+  
+  let(:user){User.new(name: "たろう", age: age)}
+  
+  describe "#greet" do 
+    subject{user.greet}
+    
+    context "12歳以下の場合" do 
+      let(:age){12}
+      it {is_expected.to eq "ぼくはたろうだよ。"}
+    end
+    
+    context "13歳以上の場合" do 
+      let(:age){13}
+      it {is_expected.to eq "僕はたろうです。"}
+    end
+  end
+  
+  describe "#child?" do 
+    subject{user.child?}
+    
+    context "12歳以下の場合" do 
+      let(:age){12}
+      it {is_expected.to eq true}
+    end
+    
+    context "13歳以上の場合" do 
+      let(:age){13}
+      it {is_expected.to eq false}
+    end
+  end
+end
+
+
+# shared_context, include_context を使う。
+# 上のコードでは "#greet"と""#child?"で同じcontext("12歳以下の場合", "13歳以上の場合")がある。これをDRY
+
+RSpec.describe User do 
+  let(:user){User.new(name: "たろう", age: age)}
+  
+  #shared_context "~" do .. end でcontextで重複する場所をまとめる。
+  shared_context "12歳の場合" do 
+    let(:age){12}
+  end
+  shared_context "13歳の場合" do 
+    let(:age){13}
+  end
+  
+  describe "#greet" do 
+    subject{user.greet}
+    
+    context "12歳以下の場合" do 
+      # include_context "~" で　shared_context で定義したcontextを呼び出す。
+      include_context "12歳の場合"
+      it {is_expected.to eq "ぼくはたろうだよ。"}
+    end
+    
+    context "13歳以上の場合" do 
+      include_context "13歳の場合"
+      it {is_expected.to eq "僕はたろうです。"}
+    end
+  end
+  
+  describe "#child?" do 
+    subject{user.child?}
+    
+    context "12歳以下の場合" do 
+      include_context "12歳の場合"
+      it {is_expected.to eq true}
+      #書き換え
+      # it {is_expected.to be_truthy}
+    end
+    
+    context "13歳以上の場合" do 
+      include_context "13歳の場合"
+      it {is_expected.to eq false}
+      #書き換え
+      # it {is_expected.to be_falsey}
+    end
+  end
+  
+end
