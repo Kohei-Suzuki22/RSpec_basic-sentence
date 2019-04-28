@@ -157,3 +157,47 @@ RSpec.describe User do
     end
   end
 end
+
+
+
+# shared_examples, it_behaves_like を使う。
+# 同じexampleをまとめて、DRYするために使う。
+
+
+RSpec.describe User do 
+  describe "#greet" do 
+    let(:user){User.new(name: "たろう", age: age)}
+    subject{user.greet}
+    
+    # shared_examples "~" do .. end で再利用したexampleを定義
+    
+    shared_examples "子どものあいさつ(12歳以下)" do 
+      it{is_expected.to eq "ぼくはたろうだよ。"}
+    end
+    
+    context "0歳の場合" do 
+      let(:age){0}
+      # it_behaves_like "~" で 定義したexampleを呼び出す。
+      it_behaves_like "子どものあいさつ(12歳以下)"
+    end
+    
+    context "12歳の場合" do 
+      let(:age){12}
+      it_behaves_like "子どものあいさつ(12歳以下)"
+    end
+    
+    shared_examples "大人のあいさつ(13歳以上)" do 
+      it {is_expected.to eq "僕はたろうです。"}
+    end
+    
+    context "13歳の場合" do 
+      let(:age){13}
+      it_behaves_like "大人のあいさつ(13歳以上)"
+    end
+    
+    context "100歳の場合" do 
+      let(:age){100}
+      it_behaves_like "大人のあいさつ(13歳以上)"
+    end
+  end
+end
