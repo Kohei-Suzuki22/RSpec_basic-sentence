@@ -89,6 +89,21 @@ RSpec.describe "繊細なクラス" do
 end
 
 
+RSpec.describe "繊細なクラス" do 
+  it "繊細なテスト" do 
+    expect(1+2).to eq 3
+  end
+  
+  
+  it "繊細なテスト2" do 
+    #pendingは、itのブロック内で使用しなければならない。
+    # コメントはつけなくても動作する。
+    pending
+    expect(1+1).to eq "2"
+  end
+end
+
+
 # skipを使ったテストの中止。
 # skipから下のテストは強制的に保留(pending)に入る。
 
