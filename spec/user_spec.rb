@@ -38,6 +38,9 @@ RSpec.describe User do
 end
 
 
+
+
+
 #let を使った書き換え。
 
 #let は遅延評価。= 必要になる瞬間まで呼び出されない。
@@ -100,6 +103,7 @@ RSpec.describe User do
 end
 
 
+
 # subjectを使った書き換え。
 # subject =　テストの主語として解釈出来る。
 
@@ -157,6 +161,34 @@ RSpec.describe User do
     end
   end
 end
+
+RSpec.describe User do 
+  describe "#greet" do 
+    let(:user){User.new(name: "たろう", age: age)}
+    subject{user.greet}
+    
+    context "0歳の場合" do 
+      let(:age){0}
+      it{is_expected.to eq "ぼくはたろうだよ。"}
+    end
+    
+    context "12歳の場合" do 
+      let(:age){12}
+      it{is_expected.to eq "ぼくはたろうだよ。"}
+    end
+    
+    context "13歳の場合" do 
+      let(:age){13}
+      it{is_expected.to eq "僕はたろうです。"}
+    end
+    
+    context "100歳の場合" do 
+      let(:age){100}
+      it{is_expected.to eq "僕はたろうです。"}
+    end
+  end
+end
+
 
 
 
@@ -238,6 +270,79 @@ RSpec.describe User do
 end
 
 
+RSpec.describe User do 
+  let(:user){User.new(name: "たろう", age: age)}
+  describe "#greet" do
+    subject{user.greet}
+    
+    shared_examples "子どものあいさつ" do 
+      it{is_expected.to eq "ぼくはたろうだよ。"}
+    end
+    
+    context "0歳の場合" do 
+      let(:age){0}
+      it_behaves_like "子どものあいさつ"
+    end
+    
+    context "12歳の場合" do 
+      let(:age){12}
+      it_behaves_like "子どものあいさつ" 
+    end
+    
+    shared_examples "大人のあいさつ" do 
+      it{is_expected.to eq "僕はたろうです。"}
+    end
+    
+    context "13歳の場合" do 
+      let(:age){13}
+      it_behaves_like "大人のあいさつ"
+    end
+    
+    context "100歳の場合" do 
+      let(:age){100}
+      it_behaves_like "大人のあいさつ"
+    end
+  end
+  
+  describe "#child?" do 
+    subject{user.child?}
+    
+    shared_examples "子どもである" do 
+      it{is_expected.to eq true}
+    end
+    
+    context "0歳の場合" do 
+      let(:age){0}
+      it_behaves_like "子どもである"
+    end
+    
+    context "12歳の場合" do 
+      let(:age){12}
+      it_behaves_like "子どもである"
+    end
+    
+    shared_examples "子どもでない" do 
+      it{is_expected.to eq false}
+    end
+    
+    context "13歳の場合" do 
+      let(:age){13}
+      it_behaves_like "子どもでない"
+    end
+    
+    context "100歳の場合" do 
+      let(:age){100}
+      it_behaves_like "子どもでない"
+    end
+    
+    
+  end
+end
+
+
+
+
+
 # shared_context, include_context を使う。
 # 上のコードでは "#greet"と""#child?"で同じcontext("12歳以下の場合", "13歳以上の場合")がある。これをDRY
 
@@ -286,6 +391,96 @@ RSpec.describe User do
   end
   
 end
+
+
+RSpec.describe User do 
+  let(:user){User.new(name: "たろう", age: age)}
+  
+  shared_context "0歳の場合" do 
+    let(:age){0}
+  end
+  
+  shared_context "12歳の場合" do 
+    let(:age){12}
+  end 
+  
+  shared_context "13歳の場合" do 
+    let(:age){13}
+  end
+  
+  shared_context "100歳の場合" do 
+    let(:age){100}
+  end
+  
+  describe "#greet" do 
+    subject{user.greet}
+    
+    shared_examples "子どものあいさつ" do 
+      it{is_expected.to eq "ぼくはたろうだよ。"}
+    end
+    
+    context "0歳の場合" do 
+      include_context "0歳の場合"
+      it_behaves_like "子どものあいさつ"
+    end
+    
+    context "12歳の場合" do 
+      include_context "12歳の場合"
+      it_behaves_like "子どものあいさつ"
+    end
+    
+    shared_examples "大人のあいさつ" do 
+      it{is_expected.to eq "僕はたろうです。"}
+    end
+    
+    context "13歳の場合" do 
+      include_context "13歳の場合" 
+      it_behaves_like "大人のあいさつ"
+    end
+    
+    context "100歳の場合" do 
+      include_context "100歳の場合" 
+      it_behaves_like "大人のあいさつ"
+    end
+  end
+  
+  describe "#child?" do 
+    subject{user.child?}
+    
+    shared_examples "子どもである" do
+      it{is_expected.to eq true}
+    end
+    
+    context "0歳の場合" do 
+      include_context "0歳の場合"
+      it_behaves_like "子どもである"
+    end
+    
+    context "12歳の場合" do 
+      include_context "12歳の場合" 
+      it_behaves_like "子どもである"
+    end
+    
+    shared_examples "子どもでない" do 
+      it{is_expected.to eq false}
+    end
+    
+    context "13歳の場合" do 
+      include_context "13歳の場合"
+      it_behaves_like "子どもでない"
+    end
+    
+    context "100歳の場合" do 
+      include_context "100歳の場合" 
+      it_behaves_like "子どもでない"
+    end
+    
+  end
+end
+
+
+
+
 
 
 #中身のないitを使う。(テストは後で書く。)
