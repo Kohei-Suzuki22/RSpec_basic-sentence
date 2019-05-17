@@ -107,7 +107,7 @@ end
 # skipを使ったテストの中止。
 # skipから下のテストは強制的に保留(pending)に入る。
 
-# xitを使ったexaample全体のskip
+# xitを使ったexample全体のskip
 
 RSpec.describe "何らかの理由で実行したくないクラス" do 
   it "実行したくないテスト" do 
